@@ -30,7 +30,7 @@
 //  | in this list, they must also be added to the "Labels Skip List". 
 //  +----------------------------------------------------------------- 
       const offspring = [
- //       "Sync Issues",
+        "Spend"
  //       "mymessages",
  //       "theOffspring",    // eg. Non-existent Ancestor  
  //       "INBOX"            // eg. System Label
@@ -42,6 +42,7 @@
 //  | their parents, grandparents, great-grandparents, etc.
 //  +------------------------------------------------------
       const skiplabel = [
+        "Action/Logs"
 //        "SENT",               // eg. System Label
 //        "noLabelsPlease",     // eg. Non-existent label       
 //        "notReal/andWrong"    // eg. Non-existent label
@@ -135,6 +136,7 @@ function addParentLabel() {
       );
   len.Valid = valid.length.toString();
   
+  valid.forEach(thisLabel => thisLabel["rootLabel"] = thisLabel.name.split("/")[0]);
 
   fetchlog += uline + '\n' + len.Valid.padStart(padnum)
     + " user labels to search";
@@ -166,6 +168,74 @@ function addParentLabel() {
   checking = "Checking messages in " + len.Valid + " labels"; 
   Logger.log(checking + (loglevel > 1 ? logLabels(names.List, checking.length, padname) : ""));
 
+  function filterValidMessageLabels(label, labelIndex, labels) {
+    let validatedLabelIndex = valid.findIndex(thisIndex => thisIndex.id == label);
+
+    if(validatedLabelIndex == -1)
+    {
+      //Logger.log("Return False on message label id removal because label is not Valid");
+
+      return false;
+    }
+
+    let validatedLabelName = valid[validatedLabelIndex].name;
+    let validatedLabelNameSplit = validatedLabelName.split("/");
+    let validatedRootLabel = valid[validatedLabelIndex].rootLabel;
+
+    let greatestValidatedLabelName = null;
+
+    let arrAllValidMessageLabels = labels.filter(function(allLabel){
+      let validLabelIndex = valid.findIndex(thisIndex => thisIndex.id == allLabel);
+
+      if(validLabelIndex == -1)
+      {
+        //Logger.log("Return False on all message label id removal because label is not Valid");
+
+        return false;
+      }
+
+      var validLabelObject = valid[validLabelIndex];
+
+      if(validLabelObject.rootLabel != validatedRootLabel)
+      {
+        //Logger.log("Return False on all message label id removal because label is not same Valid rootLabel");
+
+        return false;
+      }
+
+      validLabelObject["labelSplitLength"] = validLabelObject.name.split("/").length;
+
+      if(greatestValidatedLabelName == null || 
+          greatestValidatedLabelName.labelSplitLength < validLabelObject.labelSplitLength)
+      {
+
+        greatestValidatedLabelName = validLabelObject;
+      }
+
+      return true;
+    })
+
+    var countOfValidLabels = arrAllValidMessageLabels.length;
+
+    if(countOfValidLabels == 1){
+      //Logger.log("Return False on message label id removal because label is the only valid label");
+
+      return false;
+    }
+
+    if(greatestValidatedLabelName != null && 
+        validatedLabelNameSplit.length == greatestValidatedLabelName.labelSplitLength)
+    {
+      return false;
+    }
+
+           
+    //Logger.log("Found PreExisting Validated Label Name on Msg: " + preExistingLabelName + " With Root Label" + preExistingRootLabel + " With Count of Valid Labels" + countOfValidLabels);
+
+    return true;
+  }
+
+
 /**
  *    +-----------------+
  *    |  Search Emails  |
@@ -177,20 +247,17 @@ function addParentLabel() {
     let label = valid[i].name;
 
     // Parent label's Gmail ID (retrieve using index from name)
-    // let rootParent = label.replace("/" + label.split("/").sort().reverse().pop(), "");
-    // let rootParentIndex = mylabels.findIndex(thisIndex => thisIndex.name == thisParent); 
-    // let rootParentId = mylabels[thisParentIndex].id;
-    
-    
-    // let thisParent = label.replace("/" + label.split("/").pop(), "");
-    // let thisParentIndex = mylabels.findIndex(thisIndex => thisIndex.name == thisParent); 
-    // let thisParentId = mylabels[thisParentIndex].id;
 
-    let thisParent = label.replace("/" + label.split("/").sort().reverse().pop(), "");
+
+    let thisParent = valid[i].rootLabel;
     let thisParentIndex = mylabels.findIndex(thisIndex => thisIndex.name == thisParent); 
-    let thisParentId = mylabels[thisParentIndex].id;
-  
+    if (thisParentIndex == -1){
+      Logger.log("Unable to Lookup Root Parent Label: " + thisParent);
+      continue;
+    }
 
+    let thisParentId = mylabels[thisParentIndex].id;
+    
     let thisQuery = "\-label:" + thisParent + " label:" + label; // this label but not its parent
 
     let msgList = Gmail.Users.Messages.list("me", { "q": thisQuery }).messages;  // list of matching messages
@@ -204,7 +271,13 @@ function addParentLabel() {
         let msgId = msgList[j].id;
         let addLabel = thisParentId;
         thisLog += msgNum.toString().padStart(padDef, sp) + sp + "\"" + thisParent + "\"" + sp + "added" + sp + "to" + sp + "msgID" + sp + msgId.padEnd(17, sp) + " ";
-      
+
+        //let fullMessage = Gmail.Users.Messages.get("me",msgId)
+        //let arrMsgLabels = fullMessage.labelIds;
+        //let arrRemovableLabels = arrMsgLabels.filter(filterValidMessageLabels);
+
+        //Logger.log({"The completed removal id list":arrRemovableLabels});
+
         Gmail.Users.Messages.modify(
           {
             'addLabelIds': [addLabel]
@@ -223,6 +296,13 @@ function addParentLabel() {
   if (!allUpdates) Logger.log("All labelled messages included the labels of their ancestors");  
 
 }
+
+
+/**
+ *    +--------------------+
+ *    |  Map Valid Labels  |
+ *    +--------------------+
+ */
 
 
 
