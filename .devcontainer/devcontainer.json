@@ -6,7 +6,11 @@
   "settings": {},
   "extensions": [
     "googlecloudtools.cloudcode",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "github.vscode-pull-request-github",
+    "GitHub.copilot",
+    "labnol.google-apps-script",
+    "GitHub.codespaces"
   ],
   "postCreateCommand": "npm install -g @google/clasp"
 }
