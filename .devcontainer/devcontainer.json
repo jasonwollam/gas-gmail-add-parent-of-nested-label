@@ -12,5 +12,5 @@
     "labnol.google-apps-script",
     "GitHub.codespaces"
   ],
-  "postCreateCommand": "npm install -g @google/clasp"
+  "postCreateCommand": "npm install -g @google/clasp && npm install @types/google-apps-script typescript jest"
 }
