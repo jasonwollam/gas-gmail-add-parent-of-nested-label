@@ -1,6 +1,16 @@
-# gas-gmail-add-parent-of-nested-label
+# Jason Wollam Forked Edit Changelog
 
-Google Apps Script that adds ancestors' labels to Gmail messages labeled with one of their descendants.
+`2025-04-29`
+
+I've picked up this script for GMail Label Management as I have an extensive GMail labeling solution that I plan to target with LLM integration in the future. However, for the time being... I know very little about Google Apps Script so I am starting with this repository and the Code.js thoughtfully made available with GNU licensing from the forked user.
+
+Thus far I have refactored the scripts from the previously described functionality to only apply a new Label to GMail messages for the root /Label/Name rather than a new Label for each level as is present in the existing implementation.
+
+I have also added VSCode Dev Container and GitHub Code-Space support and expect to have a testing solution in place provided the testing is possible using GitHub Actions and as is cost efficient.
+
+---
+
+# gas-gmail-add-parent-of-nested-label
 
 The goal of this script is to create a Gmail label search experience more akin to a directory search without having to duplicate and combine filter rules. 
 
