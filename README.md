@@ -127,4 +127,6 @@ You can change the level by editing the number in Code.gs
 This was my first Google Apps Script as well as my first Git.  This may be reflected in poor and/or odd choices in both spaces. Constructive feedback is welcomed and, of course, please advise of any issues/bugs encountered.  
 
 
-
+## Additional Links 
+- [Google Apps Script Development](https://developers.google.com/apps-script)
+- []
