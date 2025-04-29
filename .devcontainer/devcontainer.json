@@ -3,15 +3,19 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "settings": {},
-  "extensions": [
-    "googlecloudtools.cloudcode",
-    "esbenp.prettier-vscode",
-    "github.vscode-pull-request-github",
-    "GitHub.copilot",
-    "labnol.google-apps-script",
-    "GitHub.codespaces"
-  ],
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "googlecloudtools.cloudcode",
+        "esbenp.prettier-vscode",
+        "github.vscode-pull-request-github",
+        "GitHub.copilot",
+        "labnol.google-apps-script",
+        "GitHub.codespaces"
+      ]
+    }
+  },
   "postCreateCommand": {
       "NPM Install":"npm install -g @google/clasp && npm install"
       , "Git Configuration":"git config --global --add safe.directory /workspaces/gas-gmail-add-parent-of-nested-label"
