@@ -283,7 +283,7 @@ function addParentLabel() {
             'addLabelIds': [addLabel]
           },
             'me', msgId
-        );
+          );
       };
 
       let thisLogPad = + padDef + 40 + (msgList.length > 1 ? 2 : 0) + label.length + thisParent.length;
@@ -430,4 +430,16 @@ function getPadding(list, extra) {
 
   var padding = longest.length + extra; // set padding as longest string plus 'extra' spaces
   return padding;
+}
+
+// Export functions for testing if running in Node.js
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    addParentLabel,
+    getPadding,
+    logLabels,
+    validate,
+    matchLabel
+    // Add other functions as needed
+  };
 }
