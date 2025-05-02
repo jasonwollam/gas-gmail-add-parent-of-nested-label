@@ -9,6 +9,8 @@ Thus far I have refactored the scripts from the previously described functionali
 I have also added VSCode Dev Container and GitHub Code-Space support and expect to have a testing solution in place provided the testing is possible using GitHub Actions and is cost efficient.
 
 The DevContainer.json provides additional VSCode extensions that may be useful as well as installation and setup of the DevContainer environment to include NPM packages that can be used to authenticate and publish the Apps Script code to the Google Cloud Hosted environment. 
+
+
 ---
 
 # gas-gmail-add-parent-of-nested-label
