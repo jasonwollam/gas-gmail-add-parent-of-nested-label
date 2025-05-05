@@ -60,7 +60,7 @@ describe('addParentLabel', () => {
         };
 
         // Require addParentLabel after mocks are set up
-        ({ addParentLabel } = require('./Code.js'));
+        ({ addParentLabel } = require('../Code.js'));
     });
 
     afterEach(() => {
