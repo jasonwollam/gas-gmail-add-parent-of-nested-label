@@ -262,7 +262,7 @@ function addParentLabel() {
 
     let msgList = Gmail.Users.Messages.list("me", { "q": thisQuery }).messages;  // list of matching messages
   
-    if (msgList) {
+    if (msgList && msgList.length) { // if there are any messages
       var allUpdates = +1;
       let thisLog = "";
     
