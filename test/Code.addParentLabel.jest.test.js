@@ -19,7 +19,8 @@ global.Gmail = {
         },
         Messages: {
             list: jest.fn((user, opts) => {
-                const match = opts.q && opts.q.match(/label:([^\s]+)/);
+                const match = opts.q && opts.q.match(/label:([^\s/]+\/[^\s]+)/);
+                // This regex matches only labels with a slash (i.e., nested labels), so in "-label:sport label:sport/hockey" it matches "sport/hockey" only.
                 if (match) {
                     const label = match[1];
                     return { messages: mockMessages[label] || [] };
