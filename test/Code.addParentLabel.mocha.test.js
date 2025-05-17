@@ -15,7 +15,7 @@ describe('addParentLabel', () => {
         }
     });
 
-    it('should call Gmail.Users.Labels.list', () => {
+    it('[Integration] Integrated Test Run - Should Call Gmail.Users.Labels.list', () => {
         addParentLabel();
         // Ensure the mock supports .mock or .called, or fallback to a manual call count
         if (Gmail.Users.Labels.list.mock) {

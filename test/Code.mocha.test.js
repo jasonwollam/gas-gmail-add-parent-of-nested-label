@@ -13,9 +13,9 @@ describe('Code.js Mocha Tests', () => {
         Logger.clear();
     });
 
-    it('should call Gmail API and log the result', () => {
+    it('[Integration] Integrated Test Run - should call Gmail API and log the result', () => {
         // Provide a mock input array if addParentLabel expects one
-        const result = Code.addParentLabel(); // Pass mockLabels as argument if needed
+        Code.addParentLabel(); // Pass mockLabels as argument if needed
         // Adjust the expected result as appropriate for your implementation
         // assert.strictEqual(result, 'expected result');
         // For demonstration, check that Logger received at least one log

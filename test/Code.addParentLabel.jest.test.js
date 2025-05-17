@@ -48,7 +48,7 @@ beforeEach(() => {
 });
 
 describe('addParentLabel', () => {
-    it('should add parent label to messages with nested labels', () => {
+    it('[Integration] Integrated Test Run - should add parent label to messages with nested labels', () => {
         addParentLabel();
         expect(modifyCalls).toEqual(
             expect.arrayContaining([
@@ -58,7 +58,7 @@ describe('addParentLabel', () => {
         );
     });
 
-    it('should log actions performed', () => {
+    it('[Integration] Integrated Test Run - should log actions performed', () => {
         addParentLabel();
     });
 });

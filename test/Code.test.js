@@ -69,7 +69,7 @@ describe('addParentLabel', () => {
         jest.clearAllMocks();
     });
 
-    it('should add parent labels to nested labels not in skip lists', () => {
+    it('[Integration] Integrated Test Run - should add parent labels to nested labels not in skip lists', () => {
         addParentLabel();
 
         // sport/hockey and sport/basketball should get parent "sport" added to their messages
@@ -87,7 +87,7 @@ describe('addParentLabel', () => {
         expect(modifyCalls.find(call => call.opts.addLabelIds === 'INBOX')).toBeUndefined();
     });
 
-    it('should log summary and skip list validation', () => {
+    it('[Integration] Integrated Test Run - should log summary and skip list validation', () => {
         addParentLabel();
         // Should log number of labels, system labels, orphans, etc.
         expect(loggerCalls.some(msg => msg.includes('GMAIL labels retrieved'))).toBe(true);
@@ -98,7 +98,7 @@ describe('addParentLabel', () => {
         expect(loggerCalls.some(msg => msg.includes('Labels skip list'))).toBe(true);
     });
 
-    it('should not add parent label if parent label is missing in mylabels', () => {
+    it('[integration] should not add parent label if parent label is missing in mylabels', () => {
         // Remove 'sport' label from mockLabels
         mockLabels = mockLabels.filter(l => l.name !== 'sport');
         addParentLabel();
@@ -108,7 +108,7 @@ describe('addParentLabel', () => {
         expect(modifyCalls.length).toBe(0);
     });
 
-    it('should not add parent label for labels in skiplabel', () => {
+    it('[integration] should not add parent label for labels in skiplabel', () => {
         // Add a nested label in skiplabel
         mockLabels.push({ id: 'Action/Logs/Child', name: 'Action/Logs/Child', type: 'user' });
         mockMessages['Action/Logs/Child'] = [{ id: 'msg5' }];
@@ -117,7 +117,7 @@ describe('addParentLabel', () => {
         expect(modifyCalls.find(call => call.msgId === 'msg5')).toBeUndefined();
     });
 
-    it('should handle case when no messages are found for a label', () => {
+    it('[integration] should handle case when no messages are found for a label', () => {
         // Remove messages for sport/basketball
         delete mockMessages['sport/basketball'];
         addParentLabel();
