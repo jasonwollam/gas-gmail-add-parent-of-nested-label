@@ -1,5 +1,5 @@
---require ./__mocks__/Gmail.js
---require ./__mocks__/Logger.js
+--require ./test/__mocks__/Gmail.js
+--require ./test/__mocks__/Logger.js
 --reporter spec
 --timeout 5000
 test/**/*.mocha.test.js

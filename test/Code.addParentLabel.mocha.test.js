@@ -1,6 +1,6 @@
 const assert = require('assert');
-const { Gmail } = require('../__mocks__/Gmail');
-const Logger = require('../__mocks__/Logger');
+const { Gmail } = require('./__mocks__/Gmail');
+const Logger = require('./__mocks__/Logger');
 global.Gmail = Gmail;
 global.Logger = Logger;
 

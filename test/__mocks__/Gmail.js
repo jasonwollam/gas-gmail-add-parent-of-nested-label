@@ -86,27 +86,44 @@ const Gmail = {
   }
 };
 
-const listMock = function() {};
-listMock.mock = { calls: [] };
-listMock.called = false;
-const listWrapper = function() {
-    listMock.called = true;
-    listMock.mock.calls.push(arguments);
-    return { labels: [{ id: 'LABEL_1', name: 'TestLabel' }] };
+// Improved mock with call tracking for Labels.list
+function createMockFunction(returnValue) {
+    const fn = function() {
+        fn.called = true;
+        fn.callCount++;
+        fn.calls.push(Array.from(arguments));
+        return returnValue;
+    };
+    fn.called = false;
+    fn.callCount = 0;
+    fn.calls = [];
+    fn.mockClear = function() {
+        fn.called = false;
+        fn.callCount = 0;
+        fn.calls = [];
+    };
+    return fn;
+}
+
+const labelsReturn = {
+    labels: [
+        { id: 'LABEL_1', name: 'sport/hockey', type: 'user' },
+        { id: 'LABEL_2', name: 'sport', type: 'user' },
+        { id: 'LABEL_3', name: 'Action/Logs', type: 'user' },
+        { id: 'LABEL_4', name: 'INBOX', type: 'system' }
+    ]
 };
-listWrapper.mock = listMock.mock;
-listWrapper.called = false;
+
+const listMock = createMockFunction(labelsReturn);
 
 module.exports.Gmail = {
     Users: {
         Labels: {
-            list: listWrapper
+            list: listMock
         },
         Messages: {
-            list: function() { return { messages: [] }; },
-            modify: function() { return true; }
+            list: createMockFunction({ messages: [ { id: 'MSG_1' }, { id: 'MSG_2' } ] }),
+            modify: createMockFunction(true)
         }
     }
 };
-
-module.exports = { Gmail };

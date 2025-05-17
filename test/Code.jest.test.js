@@ -1,6 +1,6 @@
-const { Gmail } = require('../__mocks__/Gmail');
+const { Gmail } = require('./__mocks__/Gmail');
 global.Gmail = Gmail;
-const Logger = require('../__mocks__/Logger');
+const Logger = require('./__mocks__/Logger');
 const { getPadding } = require('../Code.js');
 
 

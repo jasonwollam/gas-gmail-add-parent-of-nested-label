@@ -8,6 +8,7 @@
     "mocha": "^11.2.2"
   },
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "test:integration":"npx jest --testNamePattern=integration"
   }
 }
